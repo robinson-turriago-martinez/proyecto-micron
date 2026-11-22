@@ -1,0 +1,96 @@
+// ============================================================
+// MODELO RELACIONAL - PROYECTO MICRON
+// Sistema Ciudadano de Reporte de Microbasureros Urbanos
+// Herramienta: dbdiagram.io
+// Instrucción: Pega este código en https://dbdiagram.io
+// ============================================================
+
+Table usuario {
+  id_usuario      int [pk, increment, note: 'Identificador único']
+  nombres         varchar(100) [not null]
+  apellidos       varchar(100) [not null]
+  cedula          varchar(20) [not null, unique]
+  correo          varchar(150) [not null, unique]
+  contrasena      varchar(255) [not null, note: 'Hash bcrypt']
+  telefono        varchar(20)
+  fecha_registro  timestamp [not null, default: `now()`]
+  id_rol          int [not null, ref: > rol.id_rol]
+  id_zona         int [ref: > zona.id_zona, note: 'Zona asignada (operarios)']
+  estado          varchar(20) [not null, default: 'Activo', note: 'Activo, Inactivo, Pendiente']
+}
+
+Table rol {
+  id_rol        int [pk, increment]
+  nombre_rol    varchar(30) [not null, unique, note: 'Ciudadano, Operario, Supervisor, Administrador']
+  descripcion   varchar(200)
+}
+
+Table zona {
+  id_zona       int [pk, increment]
+  nombre_zona   varchar(100) [not null]
+  descripcion   varchar(200)
+}
+
+Table tipo_residuo {
+  id_tipo_residuo   int [pk, increment]
+  nombre            varchar(50) [not null, unique, note: 'Plastico, Organico, Escombros, Mixto, Peligroso']
+  descripcion       varchar(200)
+}
+
+Table ubicacion {
+  id_ubicacion  int [pk, increment]
+  direccion     varchar(200) [not null]
+  barrio        varchar(100) [not null]
+  latitud       decimal(10,7) [not null]
+  longitud      decimal(10,7) [not null]
+  id_zona       int [not null, ref: > zona.id_zona]
+}
+
+Table reporte {
+  id_reporte           int [pk, increment]
+  fecha_creacion       timestamp [not null, default: `now()`]
+  descripcion          text [not null]
+  estado               varchar(20) [not null, default: 'Nuevo', note: 'Nuevo, Asignado, En proceso, Resuelto, No procede']
+  prioridad            varchar(10) [not null, default: 'Media', note: 'Alta, Media, Baja']
+  nivel_afectacion     varchar(10) [note: 'Alto, Medio, Bajo']
+  fecha_actualizacion  timestamp
+  id_usuario           int [not null, ref: > usuario.id_usuario, note: 'Ciudadano que reporta']
+  id_ubicacion         int [not null, unique, ref: - ubicacion.id_ubicacion]
+  id_tipo_residuo      int [not null, ref: > tipo_residuo.id_tipo_residuo]
+}
+
+Table evidencia {
+  id_evidencia   int [pk, increment]
+  tipo_archivo   varchar(20) [not null, note: 'image/jpg, image/png, video/mp4']
+  url_archivo    varchar(500) [not null]
+  fecha_carga    timestamp [not null, default: `now()`]
+  id_reporte     int [not null, ref: > reporte.id_reporte]
+}
+
+Table asignacion {
+  id_asignacion     int [pk, increment]
+  fecha_asignacion  timestamp [not null, default: `now()`]
+  comentario        text
+  id_reporte        int [not null, ref: > reporte.id_reporte]
+  id_operario       int [not null, ref: > usuario.id_usuario, note: 'Operario asignado']
+  id_supervisor     int [ref: > usuario.id_usuario, note: 'Quien asigna']
+}
+
+Table seguimiento {
+  id_seguimiento   int [pk, increment]
+  fecha            timestamp [not null, default: `now()`]
+  estado_anterior  varchar(20)
+  estado_nuevo     varchar(20) [not null]
+  comentario       text
+  id_reporte       int [not null, ref: > reporte.id_reporte]
+  id_usuario       int [not null, ref: > usuario.id_usuario, note: 'Quien hizo el cambio']
+}
+
+Table notificacion {
+  id_notificacion  int [pk, increment]
+  mensaje          varchar(300) [not null]
+  fecha_envio      timestamp [not null, default: `now()`]
+  leida            boolean [not null, default: false]
+  id_usuario       int [not null, ref: > usuario.id_usuario, note: 'Destinatario']
+  id_reporte       int [ref: > reporte.id_reporte]
+}

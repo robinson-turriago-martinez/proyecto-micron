@@ -1,0 +1,55 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.page-header h1 {
+  font-size: 22px;
+  color: var(--texto);
+}
+
+.page-header p {
+  font-size: 13px;
+  color: var(--texto-sec);
+  margin-top: 2px;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-user-info {
+  text-align: right;
+}
+
+.header-user-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+.header-user-role {
+  display: block;
+  font-size: 11px;
+  color: var(--texto-sec);
+}
+
+.header-avatar {
+  width: 36px;
+  height: 36px;
+  background: var(--azul-claro);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--azul);
+}

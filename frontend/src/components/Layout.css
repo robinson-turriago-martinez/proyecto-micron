@@ -1,0 +1,134 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.layout-content {
+  flex: 1;
+  padding: 24px 32px;
+  overflow-y: auto;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+  .layout-content {
+    padding: 16px;
+  }
+}
+
+/* Tarjetas de estadísticas (reutilizable) */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--blanco);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card .label {
+  font-size: 12px;
+  color: var(--texto-sec);
+  margin-bottom: 4px;
+}
+
+.stat-card .value {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.stat-card .value.azul { color: var(--azul); }
+.stat-card .value.verde { color: var(--verde); }
+.stat-card .value.naranja { color: var(--naranja); }
+.stat-card .value.rojo { color: var(--rojo); }
+
+/* Tablas reutilizables */
+.table-card {
+  background: var(--blanco);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--texto-sec);
+  font-weight: 600;
+  background: #F9FAFB;
+  border-bottom: 1px solid var(--borde);
+}
+
+td {
+  padding: 14px 16px;
+  font-size: 13px;
+  color: #374151;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+/* Badges de estado */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge-nuevo { background: #DBEAFE; color: #1D4ED8; }
+.badge-proceso { background: #FEF3C7; color: #B45309; }
+.badge-resuelto { background: #D1FAE5; color: #065F46; }
+.badge-asignado { background: #E0E7FF; color: #4338CA; }
+
+/* Botones reutilizables */
+.btn {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  transition: background 0.2s;
+}
+.btn-primary {
+  background: var(--azul);
+  color: white;
+}
+.btn-primary:hover {
+  background: var(--azul-oscuro);
+}
+.btn-outline {
+  background: white;
+  color: var(--texto);
+  border: 1px solid var(--borde);
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--texto);
+  margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

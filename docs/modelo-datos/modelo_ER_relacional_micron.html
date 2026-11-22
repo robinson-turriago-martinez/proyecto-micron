@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Modelo ER y Relacional - Micron</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 30px; background: #f5f5f5; }
+        h1 { color: #1F2937; margin-bottom: 5px; text-align: center; }
+        h2 { color: #6B7280; font-weight: normal; margin-bottom: 20px; font-size: 15px; text-align: center; }
+        p.note { color: #888; font-style: italic; margin-bottom: 15px; font-size: 13px; text-align: center; }
+        .diagram-box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; display: flex; justify-content: center; width: 95%; }
+        .mermaid svg { height: auto !important; max-width: none !important; }
+    </style>
+</head>
+<body>
+    <h1>Modelo Entidad-Relación (Relacional)</h1>
+    <h2>Proyecto Micron - Sistema de Reporte de Microbasureros Urbanos</h2>
+    <p class="note">Clic derecho sobre el diagrama → "Guardar imagen como..." para descargar</p>
+
+    <div class="diagram-box">
+        <pre class="mermaid">
+erDiagram
+    ROL ||--o{ USUARIO : tiene
+    ZONA ||--o{ USUARIO : "asignado a"
+    ZONA ||--o{ UBICACION : contiene
+    USUARIO ||--o{ REPORTE : crea
+    UBICACION ||--|| REPORTE : "localiza"
+    TIPO_RESIDUO ||--o{ REPORTE : clasifica
+    REPORTE ||--o{ EVIDENCIA : tiene
+    REPORTE ||--o{ ASIGNACION : recibe
+    USUARIO ||--o{ ASIGNACION : "atiende (operario)"
+    REPORTE ||--o{ SEGUIMIENTO : registra
+    USUARIO ||--o{ SEGUIMIENTO : realiza
+    USUARIO ||--o{ NOTIFICACION : recibe
+    REPORTE ||--o{ NOTIFICACION : genera
+
+    ROL {
+        int id_rol PK
+        varchar nombre_rol UK
+        varchar descripcion
+    }
+    ZONA {
+        int id_zona PK
+        varchar nombre_zona
+        varchar descripcion
+    }
+    TIPO_RESIDUO {
+        int id_tipo_residuo PK
+        varchar nombre UK
+        varchar descripcion
+    }
+    USUARIO {
+        int id_usuario PK
+        varchar nombres
+        varchar apellidos
+        varchar cedula UK
+        varchar correo UK
+        varchar contrasena
+        varchar telefono
+        timestamp fecha_registro
+        int id_rol FK
+        int id_zona FK
+        varchar estado
+    }
+    UBICACION {
+        int id_ubicacion PK
+        varchar direccion
+        varchar barrio
+        decimal latitud
+        decimal longitud
+        int id_zona FK
+    }
+    REPORTE {
+        int id_reporte PK
+        timestamp fecha_creacion
+        text descripcion
+        varchar estado
+        varchar prioridad
+        varchar nivel_afectacion
+        timestamp fecha_actualizacion
+        int id_usuario FK
+        int id_ubicacion FK
+        int id_tipo_residuo FK
+    }
+    EVIDENCIA {
+        int id_evidencia PK
+        varchar tipo_archivo
+        varchar url_archivo
+        timestamp fecha_carga
+        int id_reporte FK
+    }
+    ASIGNACION {
+        int id_asignacion PK
+        timestamp fecha_asignacion
+        text comentario
+        int id_reporte FK
+        int id_operario FK
+        int id_supervisor FK
+    }
+    SEGUIMIENTO {
+        int id_seguimiento PK
+        timestamp fecha
+        varchar estado_anterior
+        varchar estado_nuevo
+        text comentario
+        int id_reporte FK
+        int id_usuario FK
+    }
+    NOTIFICACION {
+        int id_notificacion PK
+        varchar mensaje
+        timestamp fecha_envio
+        boolean leida
+        int id_usuario FK
+        int id_reporte FK
+    }
+        </pre>
+    </div>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default', er: { useMaxWidth: false } });
+    </script>
+</body>
+</html>

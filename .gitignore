@@ -1,0 +1,27 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno (nunca se suben credenciales)
+.env
+.env.local
+.env.*.local
+
+# Builds
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Datos de MySQL local
+data/
+
+# Respaldos de BD (pueden contener datos sensibles)
+database/backups/*.sql
