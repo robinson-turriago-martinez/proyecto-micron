@@ -6,10 +6,11 @@
 
 **Aprendiz:** Robinson Turriago  
 **Programa de formación:** Análisis y Desarrollo de Software  
-**Competencia:** 220501096  
+**Código de evidencia:** GA7-220501096-AA1-EV01  
+**RAP:** 220501096-01  
 **Instructor:** Jorge David Ortiz Rojas  
 **Centro de formación:** SENA - Centro Agroindustrial, Regional Quindío  
-**Fecha:** Octubre 2026
+**Periodo:** 12/10/26 - 25/10/26
 
 ---
 
@@ -526,7 +527,7 @@ Un pull request se rechaza, sin negociación, si presenta cualquiera de estas co
 
 ## 6.1 Configuración del tablero
 
-Herramienta utilizada: **Trello**. Enlace al tablero: [URL del tablero].
+Herramienta utilizada: **GitHub Projects** (ver sección 6.4).
 
 | Columna | Límite WIP | Criterio de entrada | Criterio de salida |
 |---------|-----------|---------------------|--------------------|
@@ -550,33 +551,126 @@ La priorización combina MoSCoW con el valor funcional y la dependencia técnica
 
 ## 6.3 Backlog priorizado del proyecto Micron
 
-| ID | Historia de usuario | RF | Prioridad |
-|----|---------------------|-----|-----------|
-| MIC-01 | Como usuario quiero registrarme e iniciar sesión para acceder al sistema | RF-01 | Must |
-| MIC-02 | Como administrador quiero gestionar usuarios y roles | RF-02 | Must |
-| MIC-03 | Como ciudadano quiero crear un reporte con ubicación y evidencia | RF-03 | Must |
-| MIC-04 | Como operario quiero cambiar el estado de un reporte y dejar seguimiento | RF-04 | Must |
-| MIC-05 | Como usuario quiero ver los reportes en un mapa con filtros | RF-05 | Should |
-| MIC-06 | Como ciudadano quiero recibir notificaciones del avance de mi reporte | RF-08 | Should |
-| MIC-07 | Como supervisor quiero un dashboard con estadísticas por zona | RF-10 | Could |
-| MIC-08 | Como usuario quiero exportar reportes a PDF | — | Won't |
+Cada historia lleva criterios de aceptación verificables y una estimación en puntos de historia (escala 1, 2, 3, 5, 8). Los IDs `MIC-NN` se usan igual en el tablero, en los nombres de rama y en los mensajes de commit.
+
+| ID | Historia de usuario | RF | Prioridad | Puntos |
+|----|---------------------|-----|-----------|--------|
+| MIC-01 | Como usuario quiero registrarme e iniciar sesión para acceder al sistema | RF-01 | Must | 5 |
+| MIC-02 | Como administrador quiero gestionar usuarios y roles | RF-02 | Must | 5 |
+| MIC-03 | Como ciudadano quiero crear un reporte con ubicación y evidencia | RF-03 | Must | 8 |
+| MIC-04 | Como operario quiero cambiar el estado de un reporte y dejar seguimiento | RF-04 | Must | 5 |
+| MIC-05 | Como usuario quiero ver los reportes en un mapa con filtros | RF-05 | Should | 5 |
+| MIC-06 | Como ciudadano quiero recibir notificaciones del avance de mi reporte | RF-08 | Should | 3 |
+| MIC-07 | Como supervisor quiero un dashboard con estadísticas por zona | RF-10 | Could | 3 |
+| MIC-08 | Como usuario quiero exportar reportes a PDF | — | Won't | — |
+
+### Criterios de aceptación por historia
+
+| ID | Criterios de aceptación |
+|----|-------------------------|
+| MIC-01 | 1) Con credenciales válidas se inicia sesión y se redirige según el rol. 2) Con credenciales inválidas se muestra un error y no se inicia sesión. 3) No se aceptan cédula ni correo ya registrados. 4) La contraseña se guarda con hash bcrypt. |
+| MIC-02 | 1) Solo el administrador accede al módulo. 2) Se puede crear, editar, inhabilitar y eliminar un usuario. 3) Se puede asignar uno de los cuatro roles. |
+| MIC-03 | 1) El formulario valida campos obligatorios y longitud mínima de la descripción. 2) Se guarda la ubicación con coordenadas válidas. 3) El reporte nace en estado «Nuevo». |
+| MIC-04 | 1) Un reporte «Resuelto» o «No procede» no se puede modificar. 2) Cada cambio de estado crea un registro de seguimiento con usuario y fecha. |
+| MIC-05 | 1) El mapa muestra los reportes con color según su estado. 2) Los filtros por estado actualizan los marcadores mostrados. |
+| MIC-06 | 1) Al cambiar el estado se genera una notificación para el ciudadano. 2) Las no leídas se distinguen de las leídas. |
+| MIC-07 | 1) Se muestra el total de reportes por zona. 2) Solo supervisor y administrador acceden. |
+| MIC-08 | Fuera del alcance de esta versión. Queda registrada para versiones posteriores. |
+
+### Desglose en tareas técnicas
+
+Las historias se dividen en tareas que se pueden completar en una rama. Cada tarea se identifica con el ID de la historia y un sufijo.
+
+| Tarea | Descripción | Capa |
+|-------|-------------|------|
+| MIC-01a | Migración y tabla `usuarios` y `roles` | Base de datos |
+| MIC-01b | Endpoints `POST /auth/registro` y `POST /auth/login` con bcrypt y JWT | Backend |
+| MIC-01c | Conectar Login y Registro a la API con validaciones | Frontend |
+| MIC-02a | CRUD de usuarios en `/api/v1/usuarios` con middleware `autorizar` | Backend |
+| MIC-02b | Conectar la pantalla de gestión de usuarios a la API | Frontend |
+| MIC-03a | Endpoint `POST /reportes` con validación de coordenadas | Backend |
+| MIC-03b | Conectar el formulario de creación de reporte a la API | Frontend |
+| MIC-04a | Servicio de cambio de estado con regla de reporte cerrado | Backend |
+| MIC-04b | Registro automático en `seguimientos` | Backend |
+| MIC-04c | Pantalla de detalle conectada al cambio de estado | Frontend |
+| MIC-05a | Endpoint `GET /mapa/reportes` con filtros | Backend |
+| MIC-05b | Conectar el mapa a la API | Frontend |
+
+## 6.4 Tablero en GitHub Projects
+
+El tablero se mantiene en **GitHub Projects**, dentro del mismo repositorio, para que cada tarea quede enlazada con sus ramas, commits y pull requests. Enlace al tablero: `https://github.com/robinson-turriago-martinez/proyecto-micron/projects` (se completa al crear el proyecto).
+
+Las columnas del tablero son las definidas en la sección 6.1.
+
+---
+# 7. ESTRATEGIA DE RAMAS Y CONVENCIÓN DE COMMITS
+
+## 7.1 Estrategia de ramas
+
+Se usa un flujo simplificado basado en Git Flow, adecuado para un equipo pequeño.
+
+| Rama | Propósito | Quién escribe en ella | Se integra en |
+|------|-----------|----------------------|---------------|
+| `main` | Versión estable y entregable | Solo por pull request desde `develop` | — |
+| `develop` | Integración del trabajo en curso | Solo por pull request desde ramas de trabajo | `main` |
+| `feature/MIC-NN-descripcion` | Una historia o tarea del backlog | El autor de la tarea | `develop` |
+| `fix/MIC-NN-descripcion` | Corrección de un defecto | El autor de la corrección | `develop` |
+| `hotfix/descripcion` | Corrección urgente sobre `main` | El autor, con revisión inmediata | `main` y `develop` |
+
+Reglas:
+
+- Nadie hace commit directamente en `main` ni en `develop`.
+- El nombre de la rama lleva el ID de la tarea del backlog y una descripción en kebab-case: `feature/MIC-01b-login-api`.
+- Una rama se elimina después de integrarse.
+- Antes de abrir un pull request, la rama de trabajo se actualiza con los últimos cambios de `develop`.
+
+## 7.2 Convención de mensajes de commit
+
+Formato: `tipo(alcance): descripción en infinitivo o presente`, en minúscula, sin punto final y de máximo 72 caracteres. Si hace falta explicar más, se agrega un cuerpo separado por una línea en blanco.
+
+| Tipo | Cuándo se usa |
+|------|---------------|
+| `feat` | Nueva funcionalidad |
+| `fix` | Corrección de un defecto |
+| `docs` | Cambios solo en documentación |
+| `refactor` | Cambio de código sin alterar el comportamiento |
+| `test` | Agregar o corregir pruebas |
+| `chore` | Tareas de mantenimiento: configuración, dependencias |
+| `style` | Formato sin cambio de lógica |
+
+El alcance es el módulo afectado: `auth`, `usuarios`, `reportes`, `mapa`, `db`, `docs`.
+
+Ejemplos correctos:
+
+```
+feat(auth): agrega endpoint de inicio de sesión (MIC-01b)
+fix(reportes): impide editar un reporte resuelto (MIC-04a)
+docs(readme): agrega pasos de instalación
+chore(db): agrega migración de la tabla usuarios (MIC-01a)
+```
+
+Ejemplos rechazados: `cambios`, `arreglé cosas`, `WIP`, `Update file.js`.
 
 ---
 
-# 7. CONTROL DE VERSIONES DEL DOCUMENTO
+# 8. RIESGOS TÉCNICOS Y MEDIDAS DE MITIGACIÓN
+
+| Riesgo | Impacto | Probabilidad | Mitigación |
+|--------|---------|--------------|------------|
+| Inconsistencia de datos entre frontend y backend | Alto | Media | Validación en ambas capas y contratos de API documentados |
+| Fugas de credenciales en el repositorio | Alto | Baja | Uso de `.env` y `.gitignore`; criterio de bloqueo en revisión |
+| Inyección SQL | Alto | Baja | Consultas siempre parametrizadas con `?` |
+| Pérdida de datos por eliminación accidental | Medio | Baja | Respaldos periódicos con mysqldump; confirmación antes de eliminar |
+| Conflictos de integración entre ramas | Medio | Media | Ramas cortas, actualizar desde `develop` antes del PR y resolver conflictos de inmediato |
+| Retraso por dependencia del backend aún no construido | Medio | Alta | Mantener el frontend con datos de prueba hasta que cada endpoint esté listo |
+| Deuda técnica por falta de estándares | Medio | Media | Este plan técnico y la revisión de código obligatoria |
+
+---
+
+# 9. CONTROL DE VERSIONES DEL DOCUMENTO
 
 | Versión | Fecha | Descripción del cambio | Autor | Aprobado por |
 |---------|-------|------------------------|-------|--------------|
 | 1.0 | 10/10/26 | Emisión inicial del plan técnico y los estándares de construcción | Robinson Turriago | Instructor_01 |
 
 ---
-
-## ANEXO: RIESGOS TÉCNICOS Y MITIGACIÓN
-
-| Riesgo | Impacto | Probabilidad | Mitigación |
-|--------|---------|--------------|------------|
-| Inconsistencia de datos entre frontend y backend | Alto | Media | Validación en ambas capas y contratos de API documentados |
-| Fugas de credenciales en el repositorio | Alto | Baja | Uso de .env y .gitignore; criterio de bloqueo en revisión |
-| Inyección SQL | Alto | Baja | Consultas siempre parametrizadas con `?` |
-| Pérdida de datos por eliminación accidental | Medio | Baja | Respaldos periódicos con mysqldump; confirmación antes de eliminar |
-| Deuda técnica por falta de estándares | Medio | Media | Este plan técnico + revisión de código obligatoria |
