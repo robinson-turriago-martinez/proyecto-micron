@@ -598,7 +598,7 @@ Las historias se dividen en tareas que se pueden completar en una rama. Cada tar
 
 ## 6.4 Tablero en GitHub Projects
 
-El tablero se mantiene en **GitHub Projects**, dentro del mismo repositorio, para que cada tarea quede enlazada con sus ramas, commits y pull requests. Enlace al tablero: `https://github.com/robinson-turriago-martinez/proyecto-micron/projects` (se completa al crear el proyecto).
+El tablero se mantiene en **GitHub Projects**, dentro del mismo repositorio, para que cada tarea quede enlazada con sus ramas, commits y pull requests. Enlace al tablero: https://github.com/users/robinson-turriago-martinez/projects/1
 
 Las columnas del tablero son las definidas en la sección 6.1.
 
