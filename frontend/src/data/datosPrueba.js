@@ -8,6 +8,7 @@ export const ESTADOS_CERRADOS = ['Resuelto', 'No procede'];
 
 export const TIPOS_RESIDUO = ['Plástico', 'Orgánico', 'Escombros', 'Mixto', 'Peligroso'];
 
+// Orden de menor a mayor gravedad; la interfaz lo usa para ordenar y filtrar.
 export const NIVELES_AFECTACION = ['Bajo', 'Medio', 'Alto'];
 
 export const ROLES = ['Ciudadano', 'Operario', 'Supervisor', 'Administrador'];
