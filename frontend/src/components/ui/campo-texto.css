@@ -1,0 +1,42 @@
+.campo-texto {
+  margin-bottom: 18px;
+}
+
+.campo-texto label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.campo-texto input,
+.campo-texto select,
+.campo-texto textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--borde);
+  border-radius: 10px;
+  font-size: 14px;
+  background: #fafbfc;
+  color: var(--texto);
+  font-family: inherit;
+}
+
+.campo-texto input:focus,
+.campo-texto select:focus,
+.campo-texto textarea:focus {
+  outline: none;
+  border-color: var(--azul);
+}
+
+.campo-texto [aria-invalid='true'] {
+  border-color: var(--rojo);
+}
+
+.campo-texto-error {
+  display: block;
+  color: var(--rojo);
+  font-size: 12px;
+  margin-top: 4px;
+}
