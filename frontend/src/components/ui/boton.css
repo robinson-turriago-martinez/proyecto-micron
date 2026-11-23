@@ -1,0 +1,33 @@
+.boton {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: background 0.2s;
+}
+
+.boton-primario {
+  background: var(--azul);
+  color: #fff;
+}
+
+.boton-primario:hover {
+  background: var(--azul-oscuro);
+}
+
+.boton-secundario {
+  background: #fff;
+  color: var(--texto);
+  border-color: var(--borde);
+}
+
+.boton-peligro {
+  background: #fff;
+  color: var(--rojo);
+  border-color: #fecaca;
+}
+
+.boton-ancho-completo {
+  width: 100%;
+}
