@@ -9,6 +9,7 @@ import DetalleReportePage from './features/reportes/pages/DetalleReportePage'
 import MapaMonitoreo from './pages/MapaMonitoreo'
 import DashboardSupervision from './pages/DashboardSupervision'
 import GestionUsuariosPage from './features/usuarios/pages/GestionUsuariosPage'
+import NoEncontradaPage from './pages/NoEncontradaPage'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path="/mapa" element={<MapaMonitoreo />} />
       <Route path="/supervision" element={<DashboardSupervision />} />
       <Route path="/usuarios" element={<GestionUsuariosPage />} />
+      <Route path="*" element={<NoEncontradaPage />} />
     </Routes>
   )
 }
