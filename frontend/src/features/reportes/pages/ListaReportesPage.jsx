@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Layout from '../components/Layout'
-import Header from '../components/Header'
-import Tabla from '../components/ui/Tabla'
-import Boton from '../components/ui/Boton'
-import { useDatos } from '../context/DatosContext'
-import { ESTADOS_REPORTE } from '../data/datosPrueba'
+import Layout from '../../../components/Layout'
+import Header from '../../../components/Header'
+import Tabla from '../../../components/ui/Tabla'
+import Boton from '../../../components/ui/Boton'
+import { useDatos } from '../../../context/DatosContext'
+import { ESTADOS_REPORTE } from '../../../data/datosPrueba'
 
 const menu = [
   { to: '/dashboard', label: 'Dashboard' },
@@ -22,7 +22,7 @@ const claseEstado = {
   'No procede': 'badge-resuelto',
 }
 
-function ListaReportes() {
+function ListaReportesPage() {
   const navigate = useNavigate()
   const { reportes } = useDatos()
   const [filtro, setFiltro] = useState('')
@@ -88,4 +88,4 @@ function ListaReportes() {
   )
 }
 
-export default ListaReportes
+export default ListaReportesPage
