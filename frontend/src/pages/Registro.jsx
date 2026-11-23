@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import CampoTexto from '../components/ui/CampoTexto'
+import Boton from '../components/ui/Boton'
 import './Auth.css'
 
 function Registro() {
@@ -50,50 +52,26 @@ function Registro() {
 
         <form className="auth-card" onSubmit={handleSubmit} noValidate>
           <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="nombres">Nombres</label>
-              <input id="nombres" name="nombres" type="text" placeholder="Tus nombres"
-                value={form.nombres} onChange={handleChange} aria-invalid={!!errores.nombres} />
-              {errores.nombres && <span className="error-text">{errores.nombres}</span>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="apellidos">Apellidos</label>
-              <input id="apellidos" name="apellidos" type="text" placeholder="Tus apellidos"
-                value={form.apellidos} onChange={handleChange} aria-invalid={!!errores.apellidos} />
-              {errores.apellidos && <span className="error-text">{errores.apellidos}</span>}
-            </div>
+            <CampoTexto id="nombres" etiqueta="Nombres" placeholder="Tus nombres"
+              value={form.nombres} onChange={handleChange} error={errores.nombres} />
+            <CampoTexto id="apellidos" etiqueta="Apellidos" placeholder="Tus apellidos"
+              value={form.apellidos} onChange={handleChange} error={errores.apellidos} />
           </div>
 
           <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="cedula">Cédula</label>
-              <input id="cedula" name="cedula" type="text" placeholder="Número de cédula"
-                value={form.cedula} onChange={handleChange} aria-invalid={!!errores.cedula} />
-              {errores.cedula && <span className="error-text">{errores.cedula}</span>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="fechaNacimiento">Fecha de nacimiento</label>
-              <input id="fechaNacimiento" name="fechaNacimiento" type="date"
-                value={form.fechaNacimiento} onChange={handleChange} aria-invalid={!!errores.fechaNacimiento} />
-              {errores.fechaNacimiento && <span className="error-text">{errores.fechaNacimiento}</span>}
-            </div>
+            <CampoTexto id="cedula" etiqueta="Cédula" placeholder="Número de cédula"
+              value={form.cedula} onChange={handleChange} error={errores.cedula} />
+            <CampoTexto id="fechaNacimiento" etiqueta="Fecha de nacimiento" type="date"
+              value={form.fechaNacimiento} onChange={handleChange} error={errores.fechaNacimiento} />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="correo">Correo electrónico</label>
-            <input id="correo" name="correo" type="email" placeholder="correo@ejemplo.com"
-              value={form.correo} onChange={handleChange} aria-invalid={!!errores.correo} />
-            {errores.correo && <span className="error-text">{errores.correo}</span>}
-          </div>
+          <CampoTexto id="correo" etiqueta="Correo electrónico" type="email" placeholder="correo@ejemplo.com"
+            value={form.correo} onChange={handleChange} error={errores.correo} />
 
-          <div className="form-group">
-            <label htmlFor="contrasena">Contraseña</label>
-            <input id="contrasena" name="contrasena" type="password" placeholder="Mínimo 8 caracteres"
-              value={form.contrasena} onChange={handleChange} aria-invalid={!!errores.contrasena} />
-            {errores.contrasena && <span className="error-text">{errores.contrasena}</span>}
-          </div>
+          <CampoTexto id="contrasena" etiqueta="Contraseña" type="password" placeholder="Mínimo 8 caracteres"
+            value={form.contrasena} onChange={handleChange} error={errores.contrasena} />
 
-          <button type="submit" className="btn-full">Registrarse</button>
+          <Boton type="submit" anchoCompleto>Registrarse</Boton>
         </form>
 
         <p className="auth-footer">
