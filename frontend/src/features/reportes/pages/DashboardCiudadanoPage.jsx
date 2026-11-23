@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
-import Layout from '../components/Layout'
-import Header from '../components/Header'
-import Tabla from '../components/ui/Tabla'
-import Boton from '../components/ui/Boton'
-import { useDatos } from '../context/DatosContext'
-import { ESTADOS_CERRADOS } from '../data/datosPrueba'
+import Layout from '../../../components/Layout'
+import Header from '../../../components/Header'
+import Tabla from '../../../components/ui/Tabla'
+import Boton from '../../../components/ui/Boton'
+import { useDatos } from '../../../context/DatosContext'
+import { ESTADOS_CERRADOS } from '../../../data/datosPrueba'
 
 const menu = [
   { to: '/dashboard', label: 'Dashboard' },
@@ -24,7 +24,7 @@ const claseEstado = {
 // Identificador del ciudadano en sesión. Se reemplaza por el usuario autenticado en MIC-01c.
 const USUARIO_SESION_ID = 4
 
-function DashboardCiudadano() {
+function DashboardCiudadanoPage() {
   const navigate = useNavigate()
   const { reportes, notificaciones } = useDatos()
 
@@ -70,4 +70,4 @@ function DashboardCiudadano() {
   )
 }
 
-export default DashboardCiudadano
+export default DashboardCiudadanoPage
