@@ -4,6 +4,8 @@ import Layout from '../components/Layout'
 import Header from '../components/Header'
 import Tabla from '../components/ui/Tabla'
 import Boton from '../components/ui/Boton'
+import { useDatos } from '../context/DatosContext'
+import { ESTADOS_REPORTE } from '../data/datosPrueba'
 
 const menu = [
   { to: '/dashboard', label: 'Dashboard' },
@@ -12,15 +14,17 @@ const menu = [
   { to: '/supervision', label: 'Supervisión' },
 ]
 
-const datos = [
-  { id: 'RPT-0012', ubicacion: 'Calle 45 con Cra 7', tipo: 'Orgánico', prioridad: 'Alta', fecha: '15/07/2026', estado: 'Nuevo', clase: 'badge-nuevo' },
-  { id: 'RPT-0011', ubicacion: 'Av. Boyacá con Calle 80', tipo: 'Escombros', prioridad: 'Alta', fecha: '12/07/2026', estado: 'Asignado', clase: 'badge-asignado' },
-  { id: 'RPT-0010', ubicacion: 'Carrera 30 #15-22', tipo: 'Plástico', prioridad: 'Media', fecha: '10/07/2026', estado: 'En Proceso', clase: 'badge-proceso' },
-  { id: 'RPT-0008', ubicacion: 'Calle 72 con Cra 11', tipo: 'Mixto', prioridad: 'Baja', fecha: '05/07/2026', estado: 'Resuelto', clase: 'badge-resuelto' },
-]
+const claseEstado = {
+  Nuevo: 'badge-nuevo',
+  Asignado: 'badge-asignado',
+  'En proceso': 'badge-proceso',
+  Resuelto: 'badge-resuelto',
+  'No procede': 'badge-resuelto',
+}
 
 function ListaReportes() {
   const navigate = useNavigate()
+  const { reportes } = useDatos()
   const [filtro, setFiltro] = useState('')
   const [busqueda, setBusqueda] = useState('')
 
@@ -31,18 +35,18 @@ function ListaReportes() {
     { clave: 'tipo', titulo: 'Tipo' },
     { clave: 'prioridad', titulo: 'Prioridad' },
     { clave: 'fecha', titulo: 'Fecha' },
-    { clave: 'estado', titulo: 'Estado', render: (r) => <span className={`badge ${r.clase}`}>{r.estado}</span> },
+    { clave: 'estado', titulo: 'Estado', render: (r) => <span className={`badge ${claseEstado[r.estado]}`}>{r.estado}</span> },
     {
       clave: 'accion',
       titulo: 'Acción',
-      render: () => (
-        <Boton variante="secundario" onClick={() => navigate('/detalle-reporte')}>Gestionar</Boton>
+      render: (r) => (
+        <Boton variante="secundario" onClick={() => navigate(`/reporte/${r.id}`)}>Gestionar</Boton>
       ),
     },
   ]
 
   // Filtro funcional (sin backend)
-  const reportesFiltrados = datos.filter((r) => {
+  const reportesFiltrados = reportes.filter((r) => {
     const coincideEstado = filtro ? r.estado === filtro : true
     const coincideBusqueda = busqueda
       ? r.id.toLowerCase().includes(busqueda.toLowerCase()) ||
