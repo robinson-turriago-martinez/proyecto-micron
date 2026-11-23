@@ -20,8 +20,8 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Datos de MySQL local
-data/
+# Datos de MySQL local (solo en la raiz, no en frontend/src/data)
+/data/
 
 # Respaldos de BD (pueden contener datos sensibles)
 database/backups/*.sql
