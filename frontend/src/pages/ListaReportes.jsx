@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Layout from '../components/Layout'
 import Header from '../components/Header'
+import Tabla from '../components/ui/Tabla'
+import Boton from '../components/ui/Boton'
 
 const menu = [
   { to: '/dashboard', label: 'Dashboard' },
@@ -21,6 +23,23 @@ function ListaReportes() {
   const navigate = useNavigate()
   const [filtro, setFiltro] = useState('')
   const [busqueda, setBusqueda] = useState('')
+
+  // Definición declarativa de columnas: cada una dice cómo pintar su celda
+  const columnas = [
+    { clave: 'id', titulo: 'ID', render: (r) => `#${r.id}` },
+    { clave: 'ubicacion', titulo: 'Ubicación' },
+    { clave: 'tipo', titulo: 'Tipo' },
+    { clave: 'prioridad', titulo: 'Prioridad' },
+    { clave: 'fecha', titulo: 'Fecha' },
+    { clave: 'estado', titulo: 'Estado', render: (r) => <span className={`badge ${r.clase}`}>{r.estado}</span> },
+    {
+      clave: 'accion',
+      titulo: 'Acción',
+      render: () => (
+        <Boton variante="secundario" onClick={() => navigate('/detalle-reporte')}>Gestionar</Boton>
+      ),
+    },
+  ]
 
   // Filtro funcional (sin backend)
   const reportesFiltrados = datos.filter((r) => {
@@ -56,32 +75,11 @@ function ListaReportes() {
         </select>
       </div>
 
-      <div className="table-card">
-        <table>
-          <thead>
-            <tr><th>ID</th><th>Ubicación</th><th>Tipo</th><th>Prioridad</th><th>Fecha</th><th>Estado</th><th>Acción</th></tr>
-          </thead>
-          <tbody>
-            {reportesFiltrados.map((r) => (
-              <tr key={r.id}>
-                <td>#{r.id}</td>
-                <td>{r.ubicacion}</td>
-                <td>{r.tipo}</td>
-                <td>{r.prioridad}</td>
-                <td>{r.fecha}</td>
-                <td><span className={`badge ${r.clase}`}>{r.estado}</span></td>
-                <td>
-                  <button className="btn btn-outline" style={{ padding: '6px 12px', fontSize: 12 }}
-                    onClick={() => navigate('/detalle-reporte')}>Gestionar</button>
-                </td>
-              </tr>
-            ))}
-            {reportesFiltrados.length === 0 && (
-              <tr><td colSpan="7" style={{ textAlign: 'center', color: 'var(--texto-sec)' }}>No se encontraron reportes</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      <Tabla
+        columnas={columnas}
+        filas={reportesFiltrados}
+        mensajeVacio="No se encontraron reportes"
+      />
     </Layout>
   )
 }
