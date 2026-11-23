@@ -78,6 +78,10 @@ export function DatosProvider({ children }) {
     const reporte = reportes.find((item) => item.id === id);
     if (!reporte) return { exito: false, mensaje: 'Reporte no encontrado' };
 
+    // Regla de negocio 1: un reporte cerrado no se modifica, para conservar la trazabilidad
+    if (ESTADOS_CERRADOS.includes(reporte.estado)) {
+      return { exito: false, mensaje: 'No se puede modificar un reporte cerrado' };
+    }
     setReportes(reportes.map((item) => (item.id === id ? { ...item, estado: nuevoEstado } : item)));
     return { exito: true };
   }
