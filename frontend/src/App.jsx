@@ -21,7 +21,6 @@ function App() {
       <Route path="/crear-reporte" element={<CrearReporte />} />
       <Route path="/reportes" element={<ListaReportes />} />
       <Route path="/reporte/:id" element={<DetalleReporte />} />
-      <Route path="/detalle-reporte" element={<DetalleReporte />} />
       <Route path="/mapa" element={<MapaMonitoreo />} />
       <Route path="/supervision" element={<DashboardSupervision />} />
       <Route path="/usuarios" element={<GestionUsuarios />} />

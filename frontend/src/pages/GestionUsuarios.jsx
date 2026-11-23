@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Layout from '../components/Layout'
 import Header from '../components/Header'
 import Modal from '../components/Modal'
+import { useDatos } from '../context/DatosContext'
+import { ROLES } from '../data/datosPrueba'
 import './Auth.css'
 
 const menu = [
@@ -18,17 +20,10 @@ const coloresRol = {
   Ciudadano: { bg: '#FEF3C7', color: '#B45309' },
 }
 
-const usuariosIniciales = [
-  { id: 1, nombres: 'Jorge', apellidos: 'Ortiz', cedula: '1023456789', correo: 'jorge.ortiz@micron.gov.co', rol: 'Administrador', estado: 'Activo' },
-  { id: 2, nombres: 'Carlos', apellidos: 'Méndez', cedula: '1098765432', correo: 'carlos.mendez@micron.gov.co', rol: 'Supervisor', estado: 'Activo' },
-  { id: 3, nombres: 'Laura', apellidos: 'Pineda', cedula: '1045678901', correo: 'laura.pineda@micron.gov.co', rol: 'Operario', estado: 'Activo' },
-  { id: 4, nombres: 'Robinson', apellidos: 'Turriago', cedula: '1012345678', correo: 'robinson.turriago@gmail.com', rol: 'Ciudadano', estado: 'Activo' },
-]
-
 const formVacio = { id: null, nombres: '', apellidos: '', cedula: '', correo: '', rol: '', estado: 'Activo' }
 
 function GestionUsuarios() {
-  const [usuarios, setUsuarios] = useState(usuariosIniciales)
+  const { usuarios, crearUsuario, actualizarUsuario, eliminarUsuario, alternarEstadoUsuario } = useDatos()
   const [busqueda, setBusqueda] = useState('')
   const [modalAbierto, setModalAbierto] = useState(false)
   const [form, setForm] = useState(formVacio)
@@ -65,44 +60,33 @@ function GestionUsuarios() {
     if (!form.correo.trim()) err.correo = 'Campo obligatorio'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.correo)) err.correo = 'Correo inválido'
     if (!form.rol) err.rol = 'Selecciona un rol'
-    // Validar cedula/correo duplicados (excepto el mismo usuario al editar)
-    const dupCedula = usuarios.find((u) => u.cedula === form.cedula && u.id !== form.id)
-    if (dupCedula) err.cedula = 'La cédula ya existe'
-    const dupCorreo = usuarios.find((u) => u.correo === form.correo && u.id !== form.id)
-    if (dupCorreo) err.correo = 'El correo ya existe'
     return err
   }
 
-  // Guardar (crear o editar)
+  // Guardar (crear o editar): la regla de unicidad vive en el contexto
   const handleGuardar = (e) => {
     e.preventDefault()
     const err = validar()
     setErrores(err)
     if (Object.keys(err).length > 0) return
 
-    if (editando) {
-      setUsuarios(usuarios.map((u) => (u.id === form.id ? form : u)))
-    } else {
-      const nuevoId = Math.max(0, ...usuarios.map((u) => u.id)) + 1
-      setUsuarios([...usuarios, { ...form, id: nuevoId }])
+    const resultado = editando ? actualizarUsuario(form) : crearUsuario(form)
+    if (!resultado.exito) {
+      const campo = resultado.mensaje.toLowerCase().includes('cédula') ? 'cedula' : 'correo'
+      setErrores({ [campo]: resultado.mensaje })
+      return
     }
     setModalAbierto(false)
   }
-
   // Eliminar usuario
   const handleEliminar = (id) => {
     if (window.confirm('¿Estás seguro de eliminar este usuario?')) {
-      setUsuarios(usuarios.filter((u) => u.id !== id))
+      eliminarUsuario(id)
     }
   }
 
   // Inhabilitar / Activar usuario
-  const toggleEstado = (id) => {
-    setUsuarios(usuarios.map((u) =>
-      u.id === id ? { ...u, estado: u.estado === 'Activo' ? 'Inactivo' : 'Activo' } : u
-    ))
-  }
-
+  const toggleEstado = (id) => alternarEstadoUsuario(id)
   const usuariosFiltrados = usuarios.filter((u) =>
     `${u.nombres} ${u.apellidos} ${u.correo} ${u.cedula}`.toLowerCase().includes(busqueda.toLowerCase())
   )
@@ -205,10 +189,7 @@ function GestionUsuarios() {
               <label htmlFor="m-rol">Rol</label>
               <select id="m-rol" name="rol" value={form.rol} onChange={handleChange} aria-invalid={!!errores.rol}>
                 <option value="">Selecciona...</option>
-                <option>Ciudadano</option>
-                <option>Operario</option>
-                <option>Supervisor</option>
-                <option>Administrador</option>
+                {ROLES.map((rol) => (<option key={rol}>{rol}</option>))}
               </select>
               {errores.rol && <span className="error-text">{errores.rol}</span>}
             </div>
