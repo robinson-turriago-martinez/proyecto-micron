@@ -1,5 +1,4 @@
-const PATRON_CORREO = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PATRON_SOLO_DIGITOS = /^\d+$/;
+import { PATRON_CORREO, PATRON_SOLO_DIGITOS } from '../../../utils/patrones';
 
 /**
  * Valida el formato de los campos de un usuario.
@@ -9,15 +8,16 @@ const PATRON_SOLO_DIGITOS = /^\d+$/;
  */
 export function validarUsuario(usuario) {
   const errores = {};
-  if (!usuario.nombres.trim()) errores.nombres = 'Campo obligatorio';
-  if (!usuario.apellidos.trim()) errores.apellidos = 'Campo obligatorio';
-
-  if (!usuario.cedula.trim()) errores.cedula = 'Campo obligatorio';
-  else if (!PATRON_SOLO_DIGITOS.test(usuario.cedula)) errores.cedula = 'Solo números';
-
-  if (!usuario.correo.trim()) errores.correo = 'Campo obligatorio';
-  else if (!PATRON_CORREO.test(usuario.correo)) errores.correo = 'Correo inválido';
-
+  if (!usuario.nombres.trim()) errores.nombres = 'Escribe los nombres';
+  if (!usuario.apellidos.trim()) errores.apellidos = 'Escribe los apellidos';
+  if (!usuario.cedula.trim()) errores.cedula = 'Escribe la cédula';
+  else if (!PATRON_SOLO_DIGITOS.test(usuario.cedula)) {
+    errores.cedula = 'Escribe solo números, sin puntos ni espacios';
+  }
+  if (!usuario.correo.trim()) errores.correo = 'Escribe el correo electrónico';
+  else if (!PATRON_CORREO.test(usuario.correo)) {
+    errores.correo = 'Escribe un correo válido, por ejemplo nombre@dominio.co';
+  }
   if (!usuario.rol) errores.rol = 'Selecciona un rol';
   return errores;
 }

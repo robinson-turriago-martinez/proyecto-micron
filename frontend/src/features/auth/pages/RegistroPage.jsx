@@ -1,69 +1,44 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CampoTexto from '../../../components/ui/CampoTexto';
 import Boton from '../../../components/ui/Boton';
+import MarcaMicron from '../../../components/ui/MarcaMicron';
+import { useRegistro } from '../hooks/useRegistro';
 import '../../../styles/auth.css';
 
 function RegistroPage() {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({
-    nombres: '',
-    apellidos: '',
-    cedula: '',
-    fechaNacimiento: '',
-    correo: '',
-    contrasena: '',
-  });
-  const [errores, setErrores] = useState({});
+  const { formulario, errores, registrado, cambiarCampo, enviar, irAlLogin } = useRegistro();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const validar = () => {
-    const err = {};
-    if (!form.nombres.trim()) err.nombres = 'Campo obligatorio';
-    if (!form.apellidos.trim()) err.apellidos = 'Campo obligatorio';
-    if (!form.cedula.trim()) err.cedula = 'Campo obligatorio';
-    else if (!/^\d+$/.test(form.cedula)) err.cedula = 'Solo números';
-    if (!form.fechaNacimiento) err.fechaNacimiento = 'Campo obligatorio';
-    if (!form.correo.trim()) err.correo = 'Campo obligatorio';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.correo)) err.correo = 'Correo inválido';
-    if (!form.contrasena) err.contrasena = 'Campo obligatorio';
-    else if (form.contrasena.length < 8) err.contrasena = 'Mínimo 8 caracteres';
-    return err;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const err = validar();
-    setErrores(err);
-    if (Object.keys(err).length === 0) {
-      alert('Registro exitoso (demo). Redirigiendo al login.');
-      navigate('/login');
-    }
-  };
-
+  if (registrado) {
+    return (
+      <div className="auth-container">
+        <div className="auth-box">
+          <MarcaMicron subtitulo="Cuenta creada" />
+          <div className="auth-card" style={{ textAlign: 'center' }}>
+            <p role="status" style={{ marginBottom: 20 }}>
+              Tu cuenta se creó correctamente. Ya puedes iniciar sesión.
+            </p>
+            <Boton anchoCompleto onClick={irAlLogin}>
+              Ir a iniciar sesión
+            </Boton>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <div className="auth-logo" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="white">
-            <path d="M13 3v6l2-2 2 2V3h2a1 1 0 011 1v16a1 1 0 01-1 1H5a1 1 0 01-1-1V4a1 1 0 011-1h8zm-2 8H7v2h4v-2zm4 4H7v2h8v-2z" />
-          </svg>
-        </div>
-        <h1 className="auth-title">Micron</h1>
-        <p className="auth-subtitle">Crea tu cuenta</p>
+        <MarcaMicron subtitulo="Crea tu cuenta" />
 
-        <form className="auth-card" onSubmit={handleSubmit} noValidate>
+        <form className="auth-card" onSubmit={enviar} noValidate>
           <div className="form-row">
             <CampoTexto
               id="nombres"
               obligatorio
               etiqueta="Nombres"
               placeholder="Tus nombres"
-              value={form.nombres}
-              onChange={handleChange}
+              value={formulario.nombres}
+              onChange={cambiarCampo}
               error={errores.nombres}
             />
             <CampoTexto
@@ -71,8 +46,8 @@ function RegistroPage() {
               obligatorio
               etiqueta="Apellidos"
               placeholder="Tus apellidos"
-              value={form.apellidos}
-              onChange={handleChange}
+              value={formulario.apellidos}
+              onChange={cambiarCampo}
               error={errores.apellidos}
             />
           </div>
@@ -83,8 +58,8 @@ function RegistroPage() {
               obligatorio
               etiqueta="Cédula"
               placeholder="Número de cédula"
-              value={form.cedula}
-              onChange={handleChange}
+              value={formulario.cedula}
+              onChange={cambiarCampo}
               error={errores.cedula}
             />
             <CampoTexto
@@ -92,8 +67,8 @@ function RegistroPage() {
               obligatorio
               etiqueta="Fecha de nacimiento"
               type="date"
-              value={form.fechaNacimiento}
-              onChange={handleChange}
+              value={formulario.fechaNacimiento}
+              onChange={cambiarCampo}
               error={errores.fechaNacimiento}
             />
           </div>
@@ -104,8 +79,8 @@ function RegistroPage() {
             etiqueta="Correo electrónico"
             type="email"
             placeholder="correo@ejemplo.com"
-            value={form.correo}
-            onChange={handleChange}
+            value={formulario.correo}
+            onChange={cambiarCampo}
             error={errores.correo}
           />
 
@@ -115,8 +90,8 @@ function RegistroPage() {
             etiqueta="Contraseña"
             type="password"
             placeholder="Mínimo 8 caracteres"
-            value={form.contrasena}
-            onChange={handleChange}
+            value={formulario.contrasena}
+            onChange={cambiarCampo}
             error={errores.contrasena}
           />
 

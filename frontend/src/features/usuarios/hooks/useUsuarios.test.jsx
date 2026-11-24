@@ -33,11 +33,15 @@ describe('validarUsuario', () => {
   });
 
   it('rechaza una cédula con letras', () => {
-    expect(validarUsuario({ ...valido, cedula: '12ab' }).cedula).toBe('Solo números');
+    expect(validarUsuario({ ...valido, cedula: '12ab' }).cedula).toBe(
+      'Escribe solo números, sin puntos ni espacios'
+    );
   });
 
   it('rechaza un correo mal formado', () => {
-    expect(validarUsuario({ ...valido, correo: 'sin-arroba' }).correo).toBe('Correo inválido');
+    expect(validarUsuario({ ...valido, correo: 'sin-arroba' }).correo).toBe(
+      'Escribe un correo válido, por ejemplo nombre@dominio.co'
+    );
   });
 });
 
@@ -94,6 +98,6 @@ describe('useUsuarios', () => {
     act(() => result.current.abrirCrear());
     act(() => result.current.guardar({ preventDefault() {} }));
     expect(result.current.totalUsuarios).toBe(antes);
-    expect(result.current.errores.nombres).toBe('Campo obligatorio');
+    expect(result.current.errores.nombres).toBe('Escribe los nombres');
   });
 });
