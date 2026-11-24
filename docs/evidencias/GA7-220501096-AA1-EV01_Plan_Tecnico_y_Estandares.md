@@ -129,39 +129,32 @@ backend/
 ```
 frontend/
 ├── src/
-│   ├── api/
-│   │   ├── httpClient.js      # configuración de axios
-│   │   ├── usuario.api.js
-│   │   └── reporte.api.js
+│   ├── api/                       # fase backend (MIC-01b en adelante): httpClient.js, *.api.js
 │   ├── components/
-│   │   ├── ui/                # piezas reutilizables
-│   │   │   ├── Boton.jsx
-│   │   │   ├── CampoTexto.jsx
-│   │   │   └── Tabla.jsx
-│   │   └── layout/
-│   │       ├── BarraLateral.jsx
-│   │       └── Encabezado.jsx
-│   ├── features/              # una carpeta por tema del negocio
-│   │   ├── auth/              # RF-01
-│   │   ├── usuarios/          # RF-02
-│   │   │   ├── components/UsuarioForm.jsx
-│   │   │   ├── hooks/useUsuarios.js
-│   │   │   └── pages/ListaUsuariosPage.jsx
-│   │   ├── reportes/          # RF-03 y RF-04
-│   │   └── mapa/              # RF-05
-│   ├── context/AuthContext.jsx    # usuario en sesión
+│   │   ├── ui/                    # piezas reutilizables: Boton, CampoTexto, Tabla, Modal, MapaPlaceholder
+│   │   └── layout/                # Header, Sidebar, Layout, Notificaciones
+│   ├── config/perfiles.js         # menú y datos de cabecera por rol
+│   ├── context/DatosContext.jsx   # estado global con datos de prueba (reemplaza a api/ hasta el backend)
+│   ├── data/datosPrueba.js        # datos de prueba, separados de los componentes
+│   ├── features/                  # una carpeta por tema del negocio
+│   │   ├── auth/pages/            # RF-01: LoginPage, RegistroPage
+│   │   ├── usuarios/              # RF-02: components/, hooks/, pages/, utils/
+│   │   ├── reportes/              # RF-03 y RF-04: components/, hooks/, pages/, utils/
+│   │   └── mapa/pages/            # RF-05: MapaMonitoreoPage
+│   ├── pages/                     # páginas transversales: ErrorPage, NoEncontradaPage
 │   ├── routes/AppRouter.jsx       # todas las rutas en un solo lugar
-│   ├── utils/
-│   ├── styles/
+│   ├── styles/auth.css            # estilos compartidos de formularios y tarjetas
 │   ├── App.jsx
+│   ├── index.css
 │   └── main.jsx
 ├── public/
 ├── .env.example
+├── .eslintrc.json
 └── vite.config.js
 ```
 
 - Un componente dentro de `features/` no se importa desde otra feature. Si se necesita en dos, se promueve a `components/ui/`.
-- Ninguna página invoca axios directamente: siempre a través de `src/api/`.
+- Ninguna página invoca axios directamente: siempre a través de `src/api/` cuando el backend exista. Mientras tanto, los datos llegan desde `DatosContext` y `data/datosPrueba.js`, y se reemplazarán sin tocar las páginas.
 - Las rutas se declaran en un único archivo, `src/routes/AppRouter.jsx`.
 
 ---
@@ -314,6 +307,31 @@ El formato no se discute en revisión: lo impone la herramienta. Se usa **Pretti
 }
 ```
 
+### .eslintrc.json (frontend)
+```json
+{
+  "root": true,
+  "env": { "browser": true, "es2022": true, "node": true },
+  "parserOptions": { "ecmaVersion": "latest", "sourceType": "module", "ecmaFeatures": { "jsx": true } },
+  "settings": { "react": { "version": "18.3" } },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "react/prop-types": "off",
+    "no-unused-vars": "error",
+    "eqeqeq": "error",
+    "prefer-const": "error",
+    "no-var": "error",
+    "no-console": ["error", { "allow": ["warn", "error"] }]
+  }
+}
+```
+Comandos del frontend: ``npm run lint``, ``npm run format`` y ``npm run format:check``. El fin de línea LF se fuerza con ``.gitattributes``.
 ## 4.2 Comentarios y documentación en código
 
 Un comentario explica **por qué** el código hace algo, no **qué** hace. Si el comentario describe literalmente la línea siguiente, se elimina el comentario y se mejora el nombre.
@@ -464,6 +482,8 @@ function validarCoordenadas(latitud, longitud) {
 # 5. PROCEDIMIENTO DE REVISIÓN DE CÓDIGO
 
 Ningún cambio llega a la rama de integración sin revisión de al menos una persona distinta de quien lo escribió. La revisión es sobre el código, no sobre la persona.
+
+**Alcance en este proyecto.** Micron lo desarrolla una sola persona, por lo que hasta que se sume otro integrante la revisión por pares se reemplaza por tres controles: la autorrevisión con la lista de la sección 5.3 diligenciada en cada pull request, la verificación automática (lint, pruebas y build) y la revisión del instructor al entregar. Los pull requests integrados hasta la versión 1.1 de este documento se aprobaron así. Cuando haya un segundo integrante rige la regla completa.
 
 ## 5.1 Flujo de la revisión
 
@@ -672,5 +692,6 @@ Ejemplos rechazados: `cambios`, `arreglé cosas`, `WIP`, `Update file.js`.
 | Versión | Fecha | Descripción del cambio | Autor | Aprobado por |
 |---------|-------|------------------------|-------|--------------|
 | 1.0 | 10/10/26 | Emisión inicial del plan técnico y los estándares de construcción | Robinson Turriago | Instructor_01 |
+| 1.1 | 23/11/26 | Alinea el plan con el código: estructura real del frontend, configuración de ESLint del frontend, nota sobre la revisión en equipo unitario y nombre de archivo GA7 | Robinson Turriago | Pendiente |
 
 ---

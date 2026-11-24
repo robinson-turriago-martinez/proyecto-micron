@@ -12,6 +12,10 @@
   ],
   "rules": {
     "react/prop-types": "off",
+    "no-unused-vars": "error",
+    "eqeqeq": "error",
+    "prefer-const": "error",
+    "no-var": "error",
     "no-console": ["error", { "allow": ["warn", "error"] }]
   }
 }
