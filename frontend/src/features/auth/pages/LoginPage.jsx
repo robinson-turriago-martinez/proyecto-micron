@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import CampoTexto from '../components/ui/CampoTexto';
-import Boton from '../components/ui/Boton';
-import './Auth.css';
+import CampoTexto from '../../../components/ui/CampoTexto';
+import Boton from '../../../components/ui/Boton';
+import '../../../styles/auth.css';
 
-function Login() {
+function LoginPage() {
   const navigate = useNavigate();
   // Formulario controlado
   const [form, setForm] = useState({ usuario: '', contrasena: '' });
@@ -47,6 +47,7 @@ function Login() {
         <form className="auth-card" onSubmit={handleSubmit} noValidate>
           <CampoTexto
             id="usuario"
+            obligatorio
             etiqueta="Usuario"
             placeholder="Ingresa tu usuario"
             value={form.usuario}
@@ -55,6 +56,7 @@ function Login() {
           />
           <CampoTexto
             id="contrasena"
+            obligatorio
             etiqueta="Contraseña"
             type="password"
             placeholder="Ingresa tu contraseña"
@@ -78,4 +80,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginPage;

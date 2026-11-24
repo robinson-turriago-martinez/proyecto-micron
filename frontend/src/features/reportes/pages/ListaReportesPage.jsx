@@ -1,17 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../../../components/Layout';
-import Header from '../../../components/Header';
+import Layout from '../../../components/layout/Layout';
+import Header from '../../../components/layout/Header';
 import Tabla from '../../../components/ui/Tabla';
 import Boton from '../../../components/ui/Boton';
 import { useDatos } from '../../../context/DatosContext';
+import { PERFILES } from '../../../config/perfiles';
 
-const menu = [
-  { to: '/dashboard', label: 'Dashboard' },
-  { to: '/reportes', label: 'Reportes' },
-  { to: '/mapa', label: 'Mapa' },
-  { to: '/supervision', label: 'Supervisión' },
-];
+const PERFIL = PERFILES.operario;
 
 const claseEstado = {
   Nuevo: 'badge-nuevo',
@@ -61,13 +57,13 @@ function ListaReportesPage() {
   });
 
   return (
-    <Layout subtitulo="Panel Operario" items={menu}>
+    <Layout subtitulo={PERFIL.panel} items={PERFIL.menu}>
       <Header
         titulo="Gestión de Reportes"
         subtitulo="Reportes asignados a tu zona"
-        usuario="Carlos Méndez"
-        rol="Operario - Zona Norte"
-        iniciales="CM"
+        usuario={PERFIL.usuario}
+        rol={PERFIL.rol}
+        iniciales={PERFIL.iniciales}
       />
 
       <div style={{ display: 'flex', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>

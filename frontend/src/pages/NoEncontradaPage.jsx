@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Boton from '../components/ui/Boton';
-import './Auth.css';
+import '../styles/auth.css';
 
 /** Página que se muestra cuando la ruta solicitada no existe. */
 function NoEncontradaPage() {

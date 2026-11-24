@@ -1,4 +1,4 @@
-import './MapaPlaceholder.css';
+import './mapa-placeholder.css';
 
 /**
  * Componente reutilizable: representación visual de un mapa (placeholder).

@@ -1,5 +1,5 @@
 import Notificaciones from './Notificaciones';
-import './Header.css';
+import './header.css';
 
 /**
  * Componente reutilizable: encabezado de página.

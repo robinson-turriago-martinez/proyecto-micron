@@ -1,12 +1,8 @@
-import Layout from '../components/Layout';
-import Header from '../components/Header';
+import Layout from '../../../components/layout/Layout';
+import Header from '../../../components/layout/Header';
+import { PERFILES } from '../../../config/perfiles';
 
-const menu = [
-  { to: '/supervision', label: 'Dashboard' },
-  { to: '/reportes', label: 'Reportes' },
-  { to: '/mapa', label: 'Mapa' },
-  { to: '/usuarios', label: 'Usuarios' },
-];
+const PERFIL = PERFILES.supervisor;
 
 const zonas = [
   { nombre: 'Zona Norte - Centro', reportes: 28, pct: 90, color: 'var(--rojo)' },
@@ -15,15 +11,15 @@ const zonas = [
   { nombre: 'Zona Oriente', reportes: 10, pct: 32, color: 'var(--verde)' },
 ];
 
-function DashboardSupervision() {
+function DashboardSupervisionPage() {
   return (
-    <Layout subtitulo="Panel Supervisor" items={menu}>
+    <Layout subtitulo={PERFIL.panel} items={PERFIL.menu}>
       <Header
         titulo="Dashboard de Supervisión"
         subtitulo="Resumen general del municipio"
-        usuario="Jorge Ortiz"
-        rol="Supervisor"
-        iniciales="JO"
+        usuario={PERFIL.usuario}
+        rol={PERFIL.rol}
+        iniciales={PERFIL.iniciales}
       />
 
       <div className="stats-grid">
@@ -74,4 +70,4 @@ function DashboardSupervision() {
   );
 }
 
-export default DashboardSupervision;
+export default DashboardSupervisionPage;

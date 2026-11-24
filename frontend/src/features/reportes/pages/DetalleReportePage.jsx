@@ -1,54 +1,39 @@
-import Layout from '../../../components/Layout';
-import Header from '../../../components/Header';
-import MapaPlaceholder from '../../../components/MapaPlaceholder';
-import CampoTexto from '../../../components/ui/CampoTexto';
+import Layout from '../../../components/layout/Layout';
+import Header from '../../../components/layout/Header';
+import MapaPlaceholder from '../../../components/ui/MapaPlaceholder';
+import InfoReporte from '../components/InfoReporte';
+import CambioEstadoForm from '../components/CambioEstadoForm';
 import Boton from '../../../components/ui/Boton';
-import { ESTADOS_REPORTE } from '../../../data/datosPrueba';
 import { useDetalleReporte } from '../hooks/useDetalleReporte';
-import '../../../pages/Auth.css';
+import '../../../styles/auth.css';
+import { PERFILES } from '../../../config/perfiles';
 
-const MENU = [
-  { to: '/dashboard', label: 'Dashboard' },
-  { to: '/reportes', label: 'Reportes' },
-  { to: '/mapa', label: 'Mapa' },
-];
-
-const CLASE_ESTADO = {
-  Nuevo: 'badge-nuevo',
-  Asignado: 'badge-asignado',
-  'En proceso': 'badge-proceso',
-  Resuelto: 'badge-resuelto',
-  'No procede': 'badge-resuelto',
-};
-
-function FilaDato({ etiqueta, valor }) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        borderBottom: '1px solid #F3F4F6',
-      }}
-    >
-      <span style={{ color: 'var(--texto-sec)' }}>{etiqueta}</span>
-      <strong>{valor}</strong>
-    </div>
-  );
-}
+const PERFIL = PERFILES.operario;
 
 function DetalleReportePage() {
-  const { reporte, autor, estaCerrado, formulario, errores, cambiarCampo, enviar, volver } =
-    useDetalleReporte();
+  const {
+    reporte,
+    autor,
+    estaCerrado,
+    formulario,
+    errores,
+    cambiarCampo,
+    enviar,
+    volver,
+    confirmando,
+    aplicarCambio,
+    cancelarConfirmacion,
+  } = useDetalleReporte();
 
   if (!reporte) {
     return (
-      <Layout subtitulo="Panel Operario" items={MENU}>
+      <Layout subtitulo={PERFIL.panel} items={PERFIL.menu}>
         <Header
           titulo="Reporte no encontrado"
           subtitulo="El reporte solicitado no existe"
-          usuario="Carlos Méndez"
-          rol="Operario"
-          iniciales="CM"
+          usuario={PERFIL.usuario}
+          rol={PERFIL.rol}
+          iniciales={PERFIL.iniciales}
         />
         <Boton variante="secundario" onClick={volver}>
           Volver a reportes
@@ -58,13 +43,13 @@ function DetalleReportePage() {
   }
 
   return (
-    <Layout subtitulo="Panel Operario" items={MENU}>
+    <Layout subtitulo={PERFIL.panel} items={PERFIL.menu}>
       <Header
         titulo={`Reporte #${reporte.id}`}
         subtitulo="Detalle y gestión del reporte"
-        usuario="Carlos Méndez"
-        rol="Operario"
-        iniciales="CM"
+        usuario={PERFIL.usuario}
+        rol={PERFIL.rol}
+        iniciales={PERFIL.iniciales}
       />
 
       <div
@@ -74,32 +59,7 @@ function DetalleReportePage() {
           gap: 20,
         }}
       >
-        <div className="auth-card">
-          <p className="section-title">Información del Reporte</p>
-          <div style={{ fontSize: 13, lineHeight: 2 }}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid #F3F4F6',
-              }}
-            >
-              <span style={{ color: 'var(--texto-sec)' }}>Estado</span>
-              <span className={`badge ${CLASE_ESTADO[reporte.estado]}`}>{reporte.estado}</span>
-            </div>
-            <FilaDato etiqueta="Prioridad" valor={reporte.prioridad} />
-            <FilaDato etiqueta="Tipo de residuo" valor={reporte.tipoResiduo} />
-            <FilaDato
-              etiqueta="Reportado por"
-              valor={autor ? `${autor.nombres} ${autor.apellidos}` : 'Desconocido'}
-            />
-            <FilaDato etiqueta="Dirección" valor={reporte.ubicacion} />
-          </div>
-          <p className="section-title" style={{ marginTop: 20 }}>
-            Descripción
-          </p>
-          <p style={{ fontSize: 13, color: '#374151', lineHeight: 1.6 }}>{reporte.descripcion}</p>
-        </div>
+        <InfoReporte reporte={reporte} autor={autor} />
 
         <div>
           <div className="auth-card" style={{ marginBottom: 20 }}>
@@ -111,43 +71,16 @@ function DetalleReportePage() {
             />
           </div>
 
-          <form className="auth-card" onSubmit={enviar} noValidate>
-            <p className="section-title">Actualizar estado</p>
-            {estaCerrado ? (
-              <p role="status" style={{ fontSize: 13, color: 'var(--texto-sec)' }}>
-                Este reporte está cerrado y ya no admite cambios.
-              </p>
-            ) : (
-              <>
-                <CampoTexto
-                  id="nuevoEstado"
-                  etiqueta="Nuevo estado"
-                  componente="select"
-                  value={formulario.nuevoEstado}
-                  onChange={cambiarCampo}
-                  error={errores.nuevoEstado}
-                >
-                  <option value="">Selecciona...</option>
-                  {ESTADOS_REPORTE.filter((estado) => estado !== 'Nuevo').map((estado) => (
-                    <option key={estado}>{estado}</option>
-                  ))}
-                </CampoTexto>
-                <CampoTexto
-                  id="comentario"
-                  etiqueta="Comentario"
-                  componente="textarea"
-                  rows="3"
-                  placeholder="Describe las acciones realizadas..."
-                  value={formulario.comentario}
-                  onChange={cambiarCampo}
-                  error={errores.comentario}
-                />
-                <Boton type="submit" anchoCompleto>
-                  Actualizar Reporte
-                </Boton>
-              </>
-            )}
-          </form>
+          <CambioEstadoForm
+            estaCerrado={estaCerrado}
+            formulario={formulario}
+            errores={errores}
+            confirmando={confirmando}
+            cambiarCampo={cambiarCampo}
+            onEnviar={enviar}
+            onConfirmar={aplicarCambio}
+            onCancelarConfirmacion={cancelarConfirmacion}
+          />
         </div>
       </div>
     </Layout>

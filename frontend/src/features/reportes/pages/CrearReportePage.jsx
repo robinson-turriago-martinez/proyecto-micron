@@ -1,33 +1,31 @@
-import Layout from '../../../components/Layout';
-import Header from '../../../components/Header';
+import Layout from '../../../components/layout/Layout';
+import Header from '../../../components/layout/Header';
 import CampoTexto from '../../../components/ui/CampoTexto';
 import Boton from '../../../components/ui/Boton';
 import { TIPOS_RESIDUO, NIVELES_AFECTACION } from '../../../data/datosPrueba';
 import { useCrearReporte } from '../hooks/useCrearReporte';
-import '../../../pages/Auth.css';
+import '../../../styles/auth.css';
+import { PERFILES } from '../../../config/perfiles';
 
-const MENU = [
-  { to: '/dashboard', label: 'Dashboard' },
-  { to: '/crear-reporte', label: 'Nuevo Reporte' },
-  { to: '/reportes', label: 'Reportes' },
-];
+const PERFIL = PERFILES.ciudadano;
 
 function CrearReportePage() {
   const { formulario, errores, cambiarCampo, enviar, cancelar } = useCrearReporte();
 
   return (
-    <Layout subtitulo="Panel Ciudadano" items={MENU}>
+    <Layout subtitulo={PERFIL.panel} items={PERFIL.menu}>
       <Header
         titulo="Registrar Nuevo Reporte"
         subtitulo="Reporta un microbasurero en tu zona"
-        usuario="Robinson Turriago"
-        rol="Ciudadano"
-        iniciales="RT"
+        usuario={PERFIL.usuario}
+        rol={PERFIL.rol}
+        iniciales={PERFIL.iniciales}
       />
 
       <form className="auth-card" style={{ maxWidth: 600 }} onSubmit={enviar} noValidate>
         <CampoTexto
           id="descripcion"
+          obligatorio
           etiqueta="Descripción del problema"
           componente="textarea"
           rows="3"
@@ -40,6 +38,7 @@ function CrearReportePage() {
         <div className="form-row">
           <CampoTexto
             id="tipoResiduo"
+            obligatorio
             etiqueta="Tipo de residuo"
             componente="select"
             value={formulario.tipoResiduo}
@@ -53,6 +52,7 @@ function CrearReportePage() {
           </CampoTexto>
           <CampoTexto
             id="nivelAfectacion"
+            obligatorio
             etiqueta="Nivel de afectación"
             componente="select"
             value={formulario.nivelAfectacion}
@@ -68,6 +68,7 @@ function CrearReportePage() {
 
         <CampoTexto
           id="direccion"
+          obligatorio
           etiqueta="Dirección"
           placeholder="Ej: Calle 45 con Cra 7"
           value={formulario.direccion}
