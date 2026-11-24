@@ -15,7 +15,13 @@ function llenarFormulario(result, datos) {
 }
 
 describe('validarUsuario', () => {
-  const valido = { nombres: 'Ana', apellidos: 'Gómez', cedula: '123', correo: 'a@b.co', rol: 'Ciudadano' };
+  const valido = {
+    nombres: 'Ana',
+    apellidos: 'Gómez',
+    cedula: '123',
+    correo: 'a@b.co',
+    rol: 'Ciudadano',
+  };
 
   it('no reporta errores con datos válidos', () => {
     expect(validarUsuario(valido)).toEqual({});
@@ -56,8 +62,11 @@ describe('useUsuarios', () => {
     const antes = result.current.totalUsuarios;
     act(() => result.current.abrirCrear());
     llenarFormulario(result, {
-      nombres: 'Ana', apellidos: 'Gómez', cedula: '777888999',
-      correo: 'ana@correo.com', rol: 'Ciudadano',
+      nombres: 'Ana',
+      apellidos: 'Gómez',
+      cedula: '777888999',
+      correo: 'ana@correo.com',
+      rol: 'Ciudadano',
     });
     act(() => result.current.guardar({ preventDefault() {} }));
     expect(result.current.totalUsuarios).toBe(antes + 1);
@@ -68,8 +77,11 @@ describe('useUsuarios', () => {
     const { result } = usarUsuarios();
     act(() => result.current.abrirCrear());
     llenarFormulario(result, {
-      nombres: 'Ana', apellidos: 'Gómez', cedula: '1023456789',
-      correo: 'nuevo@correo.com', rol: 'Ciudadano',
+      nombres: 'Ana',
+      apellidos: 'Gómez',
+      cedula: '1023456789',
+      correo: 'nuevo@correo.com',
+      rol: 'Ciudadano',
     });
     act(() => result.current.guardar({ preventDefault() {} }));
     expect(result.current.errores.cedula).toMatch(/cédula/i);

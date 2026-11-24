@@ -45,10 +45,18 @@
   font-weight: 700;
 }
 
-.stat-card .value.azul { color: var(--azul); }
-.stat-card .value.verde { color: var(--verde); }
-.stat-card .value.naranja { color: var(--naranja); }
-.stat-card .value.rojo { color: var(--rojo); }
+.stat-card .value.azul {
+  color: var(--azul);
+}
+.stat-card .value.verde {
+  color: var(--verde);
+}
+.stat-card .value.naranja {
+  color: var(--naranja);
+}
+.stat-card .value.rojo {
+  color: var(--rojo);
+}
 
 /* Tablas reutilizables */
 .table-card {
@@ -69,7 +77,7 @@ th {
   font-size: 12px;
   color: var(--texto-sec);
   font-weight: 600;
-  background: #F9FAFB;
+  background: #f9fafb;
   border-bottom: 1px solid var(--borde);
 }
 
@@ -77,7 +85,7 @@ td {
   padding: 14px 16px;
   font-size: 13px;
   color: #374151;
-  border-bottom: 1px solid #F3F4F6;
+  border-bottom: 1px solid #f3f4f6;
 }
 
 /* Badges de estado */
@@ -87,10 +95,22 @@ td {
   font-size: 11px;
   font-weight: 600;
 }
-.badge-nuevo { background: #DBEAFE; color: #1D4ED8; }
-.badge-proceso { background: #FEF3C7; color: #B45309; }
-.badge-resuelto { background: #D1FAE5; color: #065F46; }
-.badge-asignado { background: #E0E7FF; color: #4338CA; }
+.badge-nuevo {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.badge-proceso {
+  background: #fef3c7;
+  color: #b45309;
+}
+.badge-resuelto {
+  background: #d1fae5;
+  color: #065f46;
+}
+.badge-asignado {
+  background: #e0e7ff;
+  color: #4338ca;
+}
 
 /* Botones reutilizables */
 .btn {

@@ -1,11 +1,18 @@
-import Notificaciones from './Notificaciones'
-import './Header.css'
+import Notificaciones from './Notificaciones';
+import './Header.css';
 
 /**
  * Componente reutilizable: encabezado de página.
  * Muestra título, subtítulo, campana de notificaciones y datos del usuario.
  */
-function Header({ titulo, subtitulo, usuario = 'Usuario', rol = '', iniciales = 'U', notificaciones = null }) {
+function Header({
+  titulo,
+  subtitulo,
+  usuario = 'Usuario',
+  rol = '',
+  iniciales = 'U',
+  notificaciones = null,
+}) {
   return (
     <header className="page-header">
       <div>
@@ -18,10 +25,12 @@ function Header({ titulo, subtitulo, usuario = 'Usuario', rol = '', iniciales = 
           <span className="header-user-name">{usuario}</span>
           {rol && <span className="header-user-role">{rol}</span>}
         </div>
-        <div className="header-avatar" aria-hidden="true">{iniciales}</div>
+        <div className="header-avatar" aria-hidden="true">
+          {iniciales}
+        </div>
       </div>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;

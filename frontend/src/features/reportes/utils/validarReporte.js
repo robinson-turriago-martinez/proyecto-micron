@@ -29,7 +29,8 @@ export function validarReporte(reporte) {
 
   // Regla de negocio 4: las coordenadas deben ser geográficamente válidas
   if (!esCoordenadaValida(reporte.latitud, -90, 90)) errores.latitud = 'Debe estar entre -90 y 90';
-  if (!esCoordenadaValida(reporte.longitud, -180, 180)) errores.longitud = 'Debe estar entre -180 y 180';
+  if (!esCoordenadaValida(reporte.longitud, -180, 180))
+    errores.longitud = 'Debe estar entre -180 y 180';
 
   return errores;
 }

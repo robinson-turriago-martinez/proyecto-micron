@@ -1,11 +1,11 @@
-import './Modal.css'
+import './Modal.css';
 
 /**
  * Componente reutilizable: ventana modal.
  * Se cierra con el botón X, con la tecla Escape o al hacer clic en el fondo.
  */
 function Modal({ titulo, abierto, onCerrar, children }) {
-  if (!abierto) return null
+  if (!abierto) return null;
 
   return (
     <div className="modal-overlay" onClick={onCerrar} role="presentation">
@@ -18,12 +18,14 @@ function Modal({ titulo, abierto, onCerrar, children }) {
       >
         <div className="modal-header">
           <h2>{titulo}</h2>
-          <button className="modal-close" onClick={onCerrar} aria-label="Cerrar">×</button>
+          <button className="modal-close" onClick={onCerrar} aria-label="Cerrar">
+            ×
+          </button>
         </div>
         <div className="modal-body">{children}</div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Modal
+export default Modal;
