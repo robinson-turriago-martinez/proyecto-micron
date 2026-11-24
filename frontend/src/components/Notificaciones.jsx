@@ -1,13 +1,13 @@
-import { useState } from 'react'
-import './Notificaciones.css'
+import { useState } from 'react';
+import './Notificaciones.css';
 
 /**
  * Componente reutilizable: campana de notificaciones con panel desplegable.
  * RF.008 y RF.009 - avisos a los usuarios.
  */
 function Notificaciones({ items = [] }) {
-  const [abierto, setAbierto] = useState(false)
-  const noLeidas = items.filter((n) => !n.leida).length
+  const [abierto, setAbierto] = useState(false);
+  const noLeidas = items.filter((n) => !n.leida).length;
 
   return (
     <div className="notif-wrapper">
@@ -29,7 +29,10 @@ function Notificaciones({ items = [] }) {
           {items.length === 0 && <p className="notif-vacio">No tienes notificaciones</p>}
           {items.map((n, i) => (
             <div key={i} className={`notif-item ${n.leida ? 'leida' : ''}`} role="menuitem">
-              <span className="notif-dot" style={{ background: n.leida ? '#D1D5DB' : 'var(--azul)' }}></span>
+              <span
+                className="notif-dot"
+                style={{ background: n.leida ? '#D1D5DB' : 'var(--azul)' }}
+              ></span>
               <div>
                 <p className="notif-mensaje">{n.mensaje}</p>
                 <p className="notif-tiempo">{n.tiempo}</p>
@@ -39,7 +42,7 @@ function Notificaciones({ items = [] }) {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default Notificaciones
+export default Notificaciones;

@@ -1,4 +1,4 @@
-import './MapaPlaceholder.css'
+import './MapaPlaceholder.css';
 
 /**
  * Componente reutilizable: representación visual de un mapa (placeholder).
@@ -19,7 +19,7 @@ function MapaPlaceholder({ altura = 300, marcadores = [], etiqueta = 'Mapa de ub
         ></span>
       ))}
     </div>
-  )
+  );
 }
 
-export default MapaPlaceholder
+export default MapaPlaceholder;

@@ -15,7 +15,9 @@ function NoEncontradaPage() {
           <p style={{ color: 'var(--texto-sec)', fontSize: 14, marginBottom: 20 }}>
             Revisa la dirección o vuelve al inicio.
           </p>
-          <Boton anchoCompleto onClick={() => navigate('/login')}>Ir al inicio</Boton>
+          <Boton anchoCompleto onClick={() => navigate('/login')}>
+            Ir al inicio
+          </Boton>
         </div>
       </div>
     </div>

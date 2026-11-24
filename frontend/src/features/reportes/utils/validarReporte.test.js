@@ -40,8 +40,19 @@ describe('validarReporte', () => {
   });
 
   it('exige los campos obligatorios', () => {
-    const errores = validarReporte({ ...valido, descripcion: '', tipoResiduo: '', nivelAfectacion: '', direccion: '' });
-    expect(Object.keys(errores)).toEqual(['descripcion', 'tipoResiduo', 'nivelAfectacion', 'direccion']);
+    const errores = validarReporte({
+      ...valido,
+      descripcion: '',
+      tipoResiduo: '',
+      nivelAfectacion: '',
+      direccion: '',
+    });
+    expect(Object.keys(errores)).toEqual([
+      'descripcion',
+      'tipoResiduo',
+      'nivelAfectacion',
+      'direccion',
+    ]);
   });
 
   it('exige una descripción de al menos 10 caracteres', () => {
@@ -49,7 +60,9 @@ describe('validarReporte', () => {
   });
 
   it('no cuenta los espacios al medir la descripción', () => {
-    expect(validarReporte({ ...valido, descripcion: '   corta   ' }).descripcion).toMatch(/Mínimo 10/);
+    expect(validarReporte({ ...valido, descripcion: '   corta   ' }).descripcion).toMatch(
+      /Mínimo 10/
+    );
   });
 
   it('rechaza una latitud fuera de rango (regla de negocio 4)', () => {
@@ -57,6 +70,8 @@ describe('validarReporte', () => {
   });
 
   it('rechaza una longitud fuera de rango (regla de negocio 4)', () => {
-    expect(validarReporte({ ...valido, longitud: '-200' }).longitud).toBe('Debe estar entre -180 y 180');
+    expect(validarReporte({ ...valido, longitud: '-200' }).longitud).toBe(
+      'Debe estar entre -180 y 180'
+    );
   });
 });

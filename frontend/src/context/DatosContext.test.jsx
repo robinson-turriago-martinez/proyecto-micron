@@ -46,7 +46,10 @@ describe('usuarios: regla de unicidad', () => {
 
     let respuesta;
     act(() => {
-      respuesta = result.current.crearUsuario({ ...usuarioNuevo, correo: 'jorge.ortiz@micron.gov.co' });
+      respuesta = result.current.crearUsuario({
+        ...usuarioNuevo,
+        correo: 'jorge.ortiz@micron.gov.co',
+      });
     });
 
     expect(respuesta.exito).toBe(false);

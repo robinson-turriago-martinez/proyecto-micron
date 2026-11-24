@@ -65,7 +65,14 @@ export function DatosProvider({ children }) {
   function crearReporte(datos) {
     const nuevoId = Math.max(0, ...reportes.map((reporte) => reporte.id)) + 1;
     const hoy = new Date().toLocaleDateString('es-CO');
-    const nuevo = { ...datos, id: nuevoId, estado: 'Nuevo', prioridad: 'Media', fecha: hoy, usuarioId: 4 };
+    const nuevo = {
+      ...datos,
+      id: nuevoId,
+      estado: 'Nuevo',
+      prioridad: 'Media',
+      fecha: hoy,
+      usuarioId: 4,
+    };
     setReportes([nuevo, ...reportes]);
     return nuevo;
   }

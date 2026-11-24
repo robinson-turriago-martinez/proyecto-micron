@@ -1,37 +1,37 @@
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import CampoTexto from '../components/ui/CampoTexto'
-import Boton from '../components/ui/Boton'
-import './Auth.css'
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import CampoTexto from '../components/ui/CampoTexto';
+import Boton from '../components/ui/Boton';
+import './Auth.css';
 
 function Login() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // Formulario controlado
-  const [form, setForm] = useState({ usuario: '', contrasena: '' })
-  const [errores, setErrores] = useState({})
+  const [form, setForm] = useState({ usuario: '', contrasena: '' });
+  const [errores, setErrores] = useState({});
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   // Validaciones basicas
   const validar = () => {
-    const err = {}
-    if (!form.usuario.trim()) err.usuario = 'El usuario es obligatorio'
-    if (!form.contrasena) err.contrasena = 'La contraseña es obligatoria'
-    else if (form.contrasena.length < 6) err.contrasena = 'Mínimo 6 caracteres'
-    return err
-  }
+    const err = {};
+    if (!form.usuario.trim()) err.usuario = 'El usuario es obligatorio';
+    if (!form.contrasena) err.contrasena = 'La contraseña es obligatoria';
+    else if (form.contrasena.length < 6) err.contrasena = 'Mínimo 6 caracteres';
+    return err;
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    const err = validar()
-    setErrores(err)
+    e.preventDefault();
+    const err = validar();
+    setErrores(err);
     if (Object.keys(err).length === 0) {
       // Sin backend: simulamos ingreso exitoso y vamos al dashboard
-      navigate('/dashboard')
+      navigate('/dashboard');
     }
-  }
+  };
 
   return (
     <div className="auth-container">
@@ -45,11 +45,26 @@ function Login() {
         <p className="auth-subtitle">Bienvenido de vuelta</p>
 
         <form className="auth-card" onSubmit={handleSubmit} noValidate>
-          <CampoTexto id="usuario" etiqueta="Usuario" placeholder="Ingresa tu usuario"
-            value={form.usuario} onChange={handleChange} error={errores.usuario} />
-          <CampoTexto id="contrasena" etiqueta="Contraseña" type="password" placeholder="Ingresa tu contraseña"
-            value={form.contrasena} onChange={handleChange} error={errores.contrasena} />
-          <Boton type="submit" anchoCompleto>Iniciar Sesión</Boton>
+          <CampoTexto
+            id="usuario"
+            etiqueta="Usuario"
+            placeholder="Ingresa tu usuario"
+            value={form.usuario}
+            onChange={handleChange}
+            error={errores.usuario}
+          />
+          <CampoTexto
+            id="contrasena"
+            etiqueta="Contraseña"
+            type="password"
+            placeholder="Ingresa tu contraseña"
+            value={form.contrasena}
+            onChange={handleChange}
+            error={errores.contrasena}
+          />
+          <Boton type="submit" anchoCompleto>
+            Iniciar Sesión
+          </Boton>
         </form>
 
         <p className="auth-footer">
@@ -60,7 +75,7 @@ function Login() {
         </p>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

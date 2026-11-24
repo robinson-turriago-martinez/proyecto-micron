@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom'
-import './Sidebar.css'
+import { NavLink } from 'react-router-dom';
+import './Sidebar.css';
 
 /**
  * Componente reutilizable: barra lateral de navegación.
@@ -31,7 +31,7 @@ function Sidebar({ subtitulo = 'Panel', items = [] }) {
         ))}
       </nav>
     </aside>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;
