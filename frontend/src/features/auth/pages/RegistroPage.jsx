@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import CampoTexto from '../components/ui/CampoTexto';
-import Boton from '../components/ui/Boton';
-import './Auth.css';
+import CampoTexto from '../../../components/ui/CampoTexto';
+import Boton from '../../../components/ui/Boton';
+import '../../../styles/auth.css';
 
-function Registro() {
+function RegistroPage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     nombres: '',
@@ -59,6 +59,7 @@ function Registro() {
           <div className="form-row">
             <CampoTexto
               id="nombres"
+              obligatorio
               etiqueta="Nombres"
               placeholder="Tus nombres"
               value={form.nombres}
@@ -67,6 +68,7 @@ function Registro() {
             />
             <CampoTexto
               id="apellidos"
+              obligatorio
               etiqueta="Apellidos"
               placeholder="Tus apellidos"
               value={form.apellidos}
@@ -78,6 +80,7 @@ function Registro() {
           <div className="form-row">
             <CampoTexto
               id="cedula"
+              obligatorio
               etiqueta="Cédula"
               placeholder="Número de cédula"
               value={form.cedula}
@@ -86,6 +89,7 @@ function Registro() {
             />
             <CampoTexto
               id="fechaNacimiento"
+              obligatorio
               etiqueta="Fecha de nacimiento"
               type="date"
               value={form.fechaNacimiento}
@@ -96,6 +100,7 @@ function Registro() {
 
           <CampoTexto
             id="correo"
+            obligatorio
             etiqueta="Correo electrónico"
             type="email"
             placeholder="correo@ejemplo.com"
@@ -106,6 +111,7 @@ function Registro() {
 
           <CampoTexto
             id="contrasena"
+            obligatorio
             etiqueta="Contraseña"
             type="password"
             placeholder="Mínimo 8 caracteres"
@@ -127,4 +133,4 @@ function Registro() {
   );
 }
 
-export default Registro;
+export default RegistroPage;

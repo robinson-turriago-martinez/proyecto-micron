@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import './Auth.css';
+import '../styles/auth.css';
 
 function ErrorPage() {
   const navigate = useNavigate();

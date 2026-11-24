@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './Notificaciones.css';
+import './notificaciones.css';
 
 /**
  * Componente reutilizable: campana de notificaciones con panel desplegable.

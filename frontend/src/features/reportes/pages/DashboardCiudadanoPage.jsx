@@ -1,17 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import Layout from '../../../components/Layout';
-import Header from '../../../components/Header';
+import Layout from '../../../components/layout/Layout';
+import Header from '../../../components/layout/Header';
 import Tabla from '../../../components/ui/Tabla';
 import Boton from '../../../components/ui/Boton';
 import { useDatos } from '../../../context/DatosContext';
 import { ESTADOS_CERRADOS } from '../../../data/datosPrueba';
+import { PERFILES } from '../../../config/perfiles';
 
-const menu = [
-  { to: '/dashboard', label: 'Dashboard' },
-  { to: '/crear-reporte', label: 'Nuevo Reporte' },
-  { to: '/reportes', label: 'Reportes' },
-  { to: '/mapa', label: 'Mapa' },
-];
+const PERFIL = PERFILES.ciudadano;
 
 const claseEstado = {
   Nuevo: 'badge-nuevo',
@@ -57,13 +53,13 @@ function DashboardCiudadanoPage() {
   ];
 
   return (
-    <Layout subtitulo="Panel Ciudadano" items={menu}>
+    <Layout subtitulo={PERFIL.panel} items={PERFIL.menu}>
       <Header
         titulo="Bienvenido, Robinson"
         subtitulo="Resumen de tus reportes"
-        usuario="Robinson Turriago"
-        rol="Ciudadano"
-        iniciales="RT"
+        usuario={PERFIL.usuario}
+        rol={PERFIL.rol}
+        iniciales={PERFIL.iniciales}
         notificaciones={notificaciones}
       />
 

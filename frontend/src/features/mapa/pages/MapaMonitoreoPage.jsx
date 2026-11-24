@@ -1,14 +1,10 @@
 import { useState } from 'react';
-import Layout from '../components/Layout';
-import Header from '../components/Header';
-import MapaPlaceholder from '../components/MapaPlaceholder';
+import Layout from '../../../components/layout/Layout';
+import Header from '../../../components/layout/Header';
+import MapaPlaceholder from '../../../components/ui/MapaPlaceholder';
+import { PERFILES } from '../../../config/perfiles';
 
-const menu = [
-  { to: '/supervision', label: 'Dashboard' },
-  { to: '/reportes', label: 'Reportes' },
-  { to: '/mapa', label: 'Mapa' },
-  { to: '/usuarios', label: 'Usuarios' },
-];
+const PERFIL = PERFILES.supervisor;
 
 const marcadores = [
   { x: 30, y: 25, color: '#2563EB', titulo: 'Reporte nuevo' },
@@ -18,19 +14,19 @@ const marcadores = [
   { x: 25, y: 70, color: '#EF4444', titulo: 'Prioridad alta' },
 ];
 
-function MapaMonitoreo() {
+function MapaMonitoreoPage() {
   const [filtros, setFiltros] = useState({ nuevo: true, asignado: true, resuelto: true });
 
   const toggle = (key) => setFiltros({ ...filtros, [key]: !filtros[key] });
 
   return (
-    <Layout subtitulo="Panel Supervisor" items={menu}>
+    <Layout subtitulo={PERFIL.panel} items={PERFIL.menu}>
       <Header
         titulo="Mapa de Incidencias"
         subtitulo="Gestión de puntos críticos"
-        usuario="Jorge Ortiz"
-        rol="Supervisor"
-        iniciales="JO"
+        usuario={PERFIL.usuario}
+        rol={PERFIL.rol}
+        iniciales={PERFIL.iniciales}
       />
 
       <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
@@ -114,4 +110,4 @@ function MapaMonitoreo() {
   );
 }
 
-export default MapaMonitoreo;
+export default MapaMonitoreoPage;

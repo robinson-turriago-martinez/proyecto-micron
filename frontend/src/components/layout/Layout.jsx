@@ -1,5 +1,5 @@
 import Sidebar from './Sidebar';
-import './Layout.css';
+import './layout.css';
 
 /**
  * Componente reutilizable: estructura de página con sidebar + contenido.

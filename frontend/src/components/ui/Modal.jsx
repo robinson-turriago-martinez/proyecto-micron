@@ -1,4 +1,4 @@
-import './Modal.css';
+import './modal.css';
 
 /**
  * Componente reutilizable: ventana modal.
