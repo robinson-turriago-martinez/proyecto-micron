@@ -12,6 +12,7 @@ export function useDetalleReporte() {
   const { reportes, usuarios, cambiarEstadoReporte } = useDatos();
   const [formulario, setFormulario] = useState(FORMULARIO_VACIO);
   const [errores, setErrores] = useState({});
+  const [confirmando, setConfirmando] = useState(false);
 
   const reporte = reportes.find((item) => item.id === Number(id));
   const autor = reporte ? usuarios.find((usuario) => usuario.id === reporte.usuarioId) : undefined;
@@ -29,6 +30,16 @@ export function useDetalleReporte() {
     setErrores(erroresValidacion);
     if (Object.keys(erroresValidacion).length > 0) return;
 
+    // Cerrar un reporte es irreversible (regla de negocio 1): se pide confirmación antes de aplicarlo.
+    if (ESTADOS_CERRADOS.includes(formulario.nuevoEstado)) {
+      setConfirmando(true);
+      return;
+    }
+    aplicarCambio();
+  }
+
+  function aplicarCambio() {
+    setConfirmando(false);
     const resultado = cambiarEstadoReporte(reporte.id, formulario.nuevoEstado);
     if (!resultado.exito) {
       setErrores({ nuevoEstado: resultado.mensaje });
@@ -37,9 +48,24 @@ export function useDetalleReporte() {
     navigate('/reportes');
   }
 
+  function cancelarConfirmacion() {
+    setConfirmando(false);
+  }
   function volver() {
     navigate('/reportes');
   }
 
-  return { reporte, autor, estaCerrado, formulario, errores, cambiarCampo, enviar, volver };
+  return {
+    reporte,
+    autor,
+    estaCerrado,
+    formulario,
+    errores,
+    confirmando,
+    cambiarCampo,
+    enviar,
+    aplicarCambio,
+    cancelarConfirmacion,
+    volver,
+  };
 }
