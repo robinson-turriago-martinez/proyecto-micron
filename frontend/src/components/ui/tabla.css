@@ -1,0 +1,11 @@
+.tabla-contenedor {
+  background: var(--blanco);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+.tabla-vacia {
+  text-align: center;
+  color: var(--texto-sec);
+}

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import CampoTexto from '../components/ui/CampoTexto'
+import Boton from '../components/ui/Boton'
 import './Auth.css'
 
 function Login() {
@@ -43,35 +45,11 @@ function Login() {
         <p className="auth-subtitle">Bienvenido de vuelta</p>
 
         <form className="auth-card" onSubmit={handleSubmit} noValidate>
-          <div className="form-group">
-            <label htmlFor="usuario">Usuario</label>
-            <input
-              id="usuario"
-              name="usuario"
-              type="text"
-              placeholder="Ingresa tu usuario"
-              value={form.usuario}
-              onChange={handleChange}
-              aria-invalid={!!errores.usuario}
-            />
-            {errores.usuario && <span className="error-text">{errores.usuario}</span>}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="contrasena">Contraseña</label>
-            <input
-              id="contrasena"
-              name="contrasena"
-              type="password"
-              placeholder="Ingresa tu contraseña"
-              value={form.contrasena}
-              onChange={handleChange}
-              aria-invalid={!!errores.contrasena}
-            />
-            {errores.contrasena && <span className="error-text">{errores.contrasena}</span>}
-          </div>
-
-          <button type="submit" className="btn-full">Iniciar Sesión</button>
+          <CampoTexto id="usuario" etiqueta="Usuario" placeholder="Ingresa tu usuario"
+            value={form.usuario} onChange={handleChange} error={errores.usuario} />
+          <CampoTexto id="contrasena" etiqueta="Contraseña" type="password" placeholder="Ingresa tu contraseña"
+            value={form.contrasena} onChange={handleChange} error={errores.contrasena} />
+          <Boton type="submit" anchoCompleto>Iniciar Sesión</Boton>
         </form>
 
         <p className="auth-footer">
