@@ -100,7 +100,7 @@ Tipos: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `style`.
 
 Ejemplo: `feat(reportes): agrega formulario de creación de reporte (MIC-03b)`
 
-El plan técnico completo está en [docs/evidencias/GA6_EV04_Plan_Tecnico_y_Estandares.md](docs/evidencias/GA6_EV04_Plan_Tecnico_y_Estandares.md).
+El plan técnico completo está en [docs/evidencias/GA7-220501096-AA1-EV01_Plan_Tecnico_y_Estandares.md](docs/evidencias/GA7-220501096-AA1-EV01_Plan_Tecnico_y_Estandares.md).
 
 ## Autor
 
